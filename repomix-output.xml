@@ -1,0 +1,1633 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+content-script.js
+docs/install.png
+docs/popup.png
+docs/telegram.png
+inject.js
+manifest.json
+popup/popup.css
+popup/popup.html
+popup/popup.js
+popup/telegram-settings.js
+README.md
+service-worker.js
+telegram-notifier.js
+telegram-reply-poller.js
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="popup/popup.css">
+body {
+  width: 400px;
+  max-height: 500px;
+  margin: 0;
+  padding: 8px;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 13px;
+  overflow-y: auto;
+}
+
+#stats {
+  padding: 6px 8px;
+  background: #f5f5f5;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  font-size: 12px;
+  color: #666;
+}
+
+#filters {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+#filters select, #filters input {
+  flex: 1;
+  padding: 4px 6px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+#actions {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 8px;
+  align-items: center;
+}
+
+#actions button {
+  padding: 4px 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+#actions button:hover {
+  background: #f0f0f0;
+}
+
+#toggle-label {
+  margin-left: auto;
+  font-size: 12px;
+  color: #666;
+  cursor: pointer;
+}
+
+#message-list {
+  max-height: 360px;
+  overflow-y: auto;
+}
+
+.msg {
+  padding: 6px 8px;
+  margin-bottom: 4px;
+  border-radius: 4px;
+  border-left: 3px solid #ccc;
+}
+
+.msg-incoming {
+  border-left-color: #4CAF50;
+  background: #f9fff9;
+}
+
+.msg-outgoing {
+  border-left-color: #2196F3;
+  background: #f5f9ff;
+}
+
+.msg-header {
+  display: flex;
+  gap: 6px;
+  font-size: 11px;
+  color: #888;
+  margin-bottom: 2px;
+}
+
+.msg-sender {
+  font-weight: 600;
+  color: #333;
+}
+
+.msg-time {
+  margin-left: auto;
+}
+
+.msg-content {
+  font-family: 'Consolas', monospace;
+  font-size: 12px;
+  word-break: break-all;
+}
+
+.empty {
+  text-align: center;
+  color: #999;
+  padding: 40px 0;
+}
+
+/* --- Tabs --- */
+#tabs { display: flex; gap: 0; margin-bottom: 8px; border-bottom: 2px solid #eee; }
+.tab { padding: 6px 16px; border: none; background: none; cursor: pointer; font-size: 13px; color: #888; border-bottom: 2px solid transparent; margin-bottom: -2px; }
+.tab.active { color: #333; border-bottom-color: #4CAF50; font-weight: 600; }
+.tab:hover { color: #333; }
+
+/* --- Telegram settings --- */
+.tg-section { margin-bottom: 10px; }
+.tg-section label { display: block; font-size: 12px; color: #666; margin: 4px 0 2px; }
+.tg-section input[type="text"], .tg-section input[type="password"] { width: 100%; padding: 5px 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 12px; box-sizing: border-box; }
+.tg-section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.tg-section-header strong { font-size: 13px; }
+
+/* --- Rule rows --- */
+.tg-rule { display: flex; gap: 4px; margin-bottom: 4px; align-items: center; }
+.tg-rule select, .tg-rule input { padding: 3px 6px; border: 1px solid #ddd; border-radius: 4px; font-size: 11px; }
+.tg-rule-value { flex: 1; }
+.tg-rule-delete { border: none; background: none; color: #e53935; cursor: pointer; font-size: 14px; padding: 2px 4px; }
+
+/* --- Telegram actions --- */
+.tg-actions { display: flex; gap: 6px; align-items: center; margin-top: 8px; }
+.tg-actions button { padding: 5px 12px; border: 1px solid #ddd; border-radius: 4px; background: #fff; cursor: pointer; font-size: 12px; }
+#tg-test { border-color: #4CAF50; color: #4CAF50; }
+#tg-save { background: #4CAF50; color: #fff; border-color: #4CAF50; }
+#tg-status { font-size: 11px; color: #666; }
+</file>
+
+<file path="popup/popup.js">
+// Connect to service-worker to reset badge
+const port = chrome.runtime.connect({ name: 'popup' });
+
+const elements = {
+  totalCount: document.getElementById('total-count'),
+  storageUsed: document.getElementById('storage-used'),
+  lastUpdated: document.getElementById('last-updated'),
+  filterDirection: document.getElementById('filter-direction'),
+  filterKeyword: document.getElementById('filter-keyword'),
+  filterConversation: document.getElementById('filter-conversation'),
+  messageList: document.getElementById('message-list'),
+  btnExport: document.getElementById('btn-export'),
+  btnClear: document.getElementById('btn-clear'),
+  btnRefresh: document.getElementById('btn-refresh'),
+  btnToggle: document.getElementById('btn-toggle'),
+};
+
+// --- Tab switching ---
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => { p.style.display = 'none'; p.classList.remove('active'); });
+    tab.classList.add('active');
+    const panel = document.getElementById(`tab-${tab.dataset.tab}`);
+    panel.style.display = '';
+    panel.classList.add('active');
+  });
+});
+
+// --- Load & Render ---
+
+async function loadStats() {
+  const { meta_stats = { totalCount: 0, lastUpdated: 0 } } =
+    await chrome.storage.local.get('meta_stats');
+  elements.totalCount.textContent = meta_stats.totalCount;
+  elements.lastUpdated.textContent = meta_stats.lastUpdated
+    ? new Date(meta_stats.lastUpdated).toLocaleTimeString()
+    : '-';
+
+  // Estimate storage
+  const all = await chrome.storage.local.get(null);
+  const size = new Blob([JSON.stringify(all)]).size;
+  elements.storageUsed.textContent = (size / 1024).toFixed(1);
+}
+
+async function loadConversations() {
+  const all = await chrome.storage.local.get(null);
+  const convKeys = Object.keys(all).filter(k => k.startsWith('messages_'));
+  const select = elements.filterConversation;
+
+  // Keep "All" option, clear rest
+  select.innerHTML = '<option value="all">All conversations</option>';
+  convKeys.forEach(key => {
+    const id = key.replace('messages_', '');
+    const opt = document.createElement('option');
+    opt.value = id;
+    opt.textContent = id;
+    select.appendChild(opt);
+  });
+}
+
+async function loadMessages() {
+  const direction = elements.filterDirection.value;
+  const keyword = elements.filterKeyword.value.toLowerCase();
+  const convId = elements.filterConversation.value;
+
+  const all = await chrome.storage.local.get(null);
+  const msgKeys = Object.keys(all).filter(k => k.startsWith('messages_'));
+
+  let allMessages = [];
+  for (const key of msgKeys) {
+    const id = key.replace('messages_', '');
+    if (convId !== 'all' && id !== convId) continue;
+    allMessages = allMessages.concat(all[key] || []);
+  }
+
+  // Sort by timestamp desc
+  allMessages.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+
+  // Apply filters
+  let filtered = allMessages;
+  if (direction !== 'all') {
+    filtered = filtered.filter(m => m.direction === direction);
+  }
+  if (keyword) {
+    filtered = filtered.filter(m =>
+      (m.content || '').toLowerCase().includes(keyword) ||
+      (m.sender || '').toLowerCase().includes(keyword)
+    );
+  }
+
+  // Show last 50
+  renderMessages(filtered.slice(0, 50));
+}
+
+function renderMessages(messages) {
+  const list = elements.messageList;
+  list.innerHTML = '';
+
+  if (messages.length === 0) {
+    list.innerHTML = '<div class="empty">No messages yet</div>';
+    return;
+  }
+
+  messages.forEach(msg => {
+    const div = document.createElement('div');
+    div.className = `msg msg-${msg.direction || 'unknown'}`;
+    div.innerHTML = `
+      <div class="msg-header">
+        <span class="msg-direction">${msg.direction === 'incoming' ? '⬇' : '⬆'}</span>
+        <span class="msg-sender">${escapeHtml(msg.sender || '?')}</span>
+        <span class="msg-time">${msg.timestamp ? new Date(msg.timestamp).toLocaleTimeString() : ''}</span>
+      </div>
+      <div class="msg-content">${escapeHtml(msg.content || msg.raw || '[no content]')}</div>
+    `;
+    list.appendChild(div);
+  });
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+// --- Actions ---
+
+async function exportJson() {
+  const all = await chrome.storage.local.get(null);
+  const msgKeys = Object.keys(all).filter(k => k.startsWith('messages_'));
+
+  const exportData = {};
+  msgKeys.forEach(key => { exportData[key] = all[key]; });
+
+  const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `zalo-messages-${new Date().toISOString().slice(0, 10)}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+async function clearAll() {
+  if (!confirm('Clear all stored messages?')) return;
+  // Only remove message keys + stats, preserve telegram config
+  const all = await chrome.storage.local.get(null);
+  const keysToRemove = Object.keys(all).filter(k => k.startsWith('messages_') || k === 'meta_stats');
+  await chrome.storage.local.remove(keysToRemove);
+  await refresh();
+}
+
+async function refresh() {
+  await loadStats();
+  await loadConversations();
+  await loadMessages();
+}
+
+async function toggleLogging() {
+  const enabled = elements.btnToggle.checked;
+  await chrome.storage.local.set({ logging_enabled: enabled });
+}
+
+async function loadToggleState() {
+  const { logging_enabled } = await chrome.storage.local.get('logging_enabled');
+  elements.btnToggle.checked = logging_enabled !== false; // default true
+}
+
+// --- Events ---
+
+elements.btnExport.addEventListener('click', exportJson);
+elements.btnClear.addEventListener('click', clearAll);
+elements.btnRefresh.addEventListener('click', refresh);
+elements.btnToggle.addEventListener('change', toggleLogging);
+elements.filterDirection.addEventListener('change', loadMessages);
+elements.filterKeyword.addEventListener('input', loadMessages);
+elements.filterConversation.addEventListener('change', loadMessages);
+
+// --- Init ---
+
+loadToggleState();
+refresh();
+</file>
+
+<file path="telegram-reply-poller.js">
+// Telegram reply poller - long-polls getUpdates for replies, sends to Zalo tab
+// Used by service-worker via importScripts()
+
+const REPLY_POLL_ALARM = 'telegram-reply-poll';
+let isPolling = false;
+
+// Start long-polling loop + keepalive alarm
+function startReplyPolling() {
+  // Alarm keeps service worker alive and restarts polling if it dies
+  chrome.alarms.create(REPLY_POLL_ALARM, { periodInMinutes: 0.5 });
+  if (!isPolling) {
+    isPolling = true;
+    pollLoop();
+  }
+  console.log('[ZaloLogger←TG] Reply long-polling started');
+}
+
+// Stop polling
+function stopReplyPolling() {
+  isPolling = false;
+  chrome.alarms.clear(REPLY_POLL_ALARM);
+  console.log('[ZaloLogger←TG] Reply polling stopped');
+}
+
+// Long-polling loop: Telegram holds connection up to 25s, returns instantly on new update
+async function pollLoop() {
+  while (isPolling) {
+    try {
+      await handleReplyPoll();
+    } catch (err) {
+      console.warn('[ZaloLogger←TG] Poll loop error:', err.message);
+      // Back off on error to avoid tight loop
+      await new Promise(r => setTimeout(r, 5000));
+    }
+  }
+}
+
+// Single poll cycle with long-polling (timeout=25s)
+async function handleReplyPoll() {
+  const result = await chrome.storage.local.get(['telegram_config', 'telegram_last_update_id']);
+  const config = result.telegram_config;
+
+  // Guard: check enabled + replyEnabled
+  if (!config || !config.enabled || !config.replyEnabled) {
+    isPolling = false;
+    return;
+  }
+  if (!config.botToken || !config.chatId) return;
+
+  const offset = (result.telegram_last_update_id || 0) + 1;
+  const url = `https://api.telegram.org/bot${config.botToken}/getUpdates?offset=${offset}&timeout=25&allowed_updates=["message","callback_query"]`;
+
+  // Long-poll: Telegram holds this request up to 25s, returns instantly when update arrives
+  const res = await fetch(url);
+  const data = await res.json();
+
+  if (!data.ok) {
+    if (data.error_code === 409) {
+      console.warn('[ZaloLogger←TG] Conflict: bot has webhook set. Disable webhook or use a different bot.');
+      stopReplyPolling();
+    }
+    return;
+  }
+  if (!data.result || data.result.length === 0) return;
+
+  let maxUpdateId = result.telegram_last_update_id || 0;
+
+  for (const update of data.result) {
+    if (update.update_id > maxUpdateId) {
+      maxUpdateId = update.update_id;
+    }
+
+    // Handle callback_query (inline button press) — instant response
+    if (update.callback_query) {
+      await handleCallbackQuery(config, update.callback_query);
+      continue;
+    }
+
+    const msg = update.message;
+    if (!msg || !msg.reply_to_message) continue;
+
+    // Only process replies in our chat
+    if (String(msg.chat.id) !== String(config.chatId)) continue;
+
+    // Parse conversation from the original message
+    const originalText = msg.reply_to_message.text || '';
+    const conversationId = parseConversationIdFromReply(originalText);
+
+    if (!conversationId) {
+      console.log('[ZaloLogger←TG] Reply ignored: no 📍 marker in original message');
+      continue;
+    }
+
+    const sender = parseSenderFromReply(originalText);
+    const replyText = msg.text || '';
+    if (!replyText.trim()) continue;
+
+    console.log(`[ZaloLogger←TG] Reply to ${sender || '?'} → "${conversationId}": ${replyText.slice(0, 50)}`);
+    const sendResult = await sendReplyToZaloTab(config, conversationId, replyText);
+
+    // Edit the force-reply prompt message to show result
+    const promptMsgId = msg.reply_to_message.message_id;
+    const promptKey = `reply_prompt_${promptMsgId}`;
+    const promptData = (await chrome.storage.local.get(promptKey))[promptKey];
+    if (promptData) {
+      if (sendResult?.ok) {
+        await editTelegramMessage(config, promptData.chatId, promptMsgId,
+          `✅ Sent to <b>${escapeHtmlTelegram(promptData.conversationId)}</b>`);
+      } else {
+        await editTelegramMessage(config, promptData.chatId, promptMsgId,
+          `❌ Failed: ${escapeHtmlTelegram(sendResult?.error || 'Unknown error')}`);
+      }
+      await chrome.storage.local.remove(promptKey);
+    }
+  }
+
+  // Save latest update_id
+  await chrome.storage.local.set({ telegram_last_update_id: maxUpdateId });
+}
+
+// Handle inline button press — send minimal force-reply message quoting original
+async function handleCallbackQuery(config, callbackQuery) {
+  try {
+    const originalMsg = callbackQuery.message;
+    if (!originalMsg) return;
+
+    const originalText = originalMsg.text || '';
+    const conversationId = parseConversationIdFromReply(originalText);
+    const sender = parseSenderFromReply(originalText);
+
+    // Dismiss button loading immediately
+    await answerCallbackQuery(config, callbackQuery.id, '');
+
+    if (!conversationId) return;
+
+    // Extract original content (last line after 🕐 time line)
+    const lines = originalText.split('\n');
+    const contentLines = lines.filter(l => !l.startsWith('📍') && !l.startsWith('🕐') && l.trim() !== sender);
+    const preview = contentLines.join('\n').trim().slice(0, 100);
+
+    // Send force_reply with full context — triggers reply bar in Telegram client
+    // Include 📍 marker so poller can parse conversation from the reply
+    const promptText = `↩️ <b>Reply to ${escapeHtmlTelegram(sender || '?')}</b>\n📍 ${escapeHtmlTelegram(conversationId)}\n\n<i>${escapeHtmlTelegram(preview)}</i>\n\n✍️ Type your reply:`;
+    const body = {
+      chat_id: originalMsg.chat.id,
+      text: promptText,
+      parse_mode: 'HTML',
+      reply_parameters: { message_id: originalMsg.message_id },
+      reply_markup: { force_reply: true, selective: true },
+    };
+    if (config.topicId) body.message_thread_id = Number(config.topicId);
+
+    const sendRes = await fetch(`https://api.telegram.org/bot${config.botToken}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    const sendData = await sendRes.json();
+
+    // Store prompt message_id so we can edit it after successful reply
+    if (sendData.ok && sendData.result?.message_id) {
+      const promptMsgId = sendData.result.message_id;
+      const chatId = originalMsg.chat.id;
+      // Save mapping: when user replies to this prompt, we know which message to edit
+      await chrome.storage.local.set({
+        [`reply_prompt_${promptMsgId}`]: { chatId, sender, conversationId, preview },
+      });
+    }
+  } catch (err) {
+    console.warn('[ZaloLogger←TG] Callback query error:', err.message);
+  }
+}
+
+// Answer callback query to dismiss loading indicator
+async function answerCallbackQuery(config, callbackQueryId, text) {
+  try {
+    await fetch(`https://api.telegram.org/bot${config.botToken}/answerCallbackQuery`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ callback_query_id: callbackQueryId, text }),
+    });
+  } catch (err) {
+    console.warn('[ZaloLogger←TG] Answer callback error:', err.message);
+  }
+}
+
+// Edit a Telegram message text
+async function editTelegramMessage(config, chatId, messageId, text) {
+  try {
+    await fetch(`https://api.telegram.org/bot${config.botToken}/editMessageText`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: chatId, message_id: messageId, text, parse_mode: 'HTML' }),
+    });
+  } catch (err) {
+    console.warn('[ZaloLogger←TG] Edit message error:', err.message);
+  }
+}
+
+// Find Zalo tab and send message command
+async function sendReplyToZaloTab(config, conversationId, text) {
+  try {
+    const tabs = await chrome.tabs.query({ url: 'https://chat.zalo.me/*' });
+
+    if (tabs.length === 0) {
+      await sendTelegramError(config, '❌ Zalo tab not open. Cannot send reply.');
+      return { ok: false, error: 'Zalo tab not open' };
+    }
+
+    const tabId = tabs[0].id;
+    const response = await chrome.tabs.sendMessage(tabId, {
+      type: 'ZALO_SEND_MSG',
+      conversationId,
+      text,
+    });
+
+    if (response && response.ok) {
+      console.log(`[ZaloLogger←TG] Sent to Zalo: "${conversationId}"`);
+      return { ok: true };
+    } else {
+      const error = response?.error || 'Unknown error';
+      console.warn(`[ZaloLogger←TG] Send failed: ${error}`);
+      await sendTelegramError(config, `❌ Send failed: ${error}`);
+      return { ok: false, error };
+    }
+  } catch (err) {
+    console.warn('[ZaloLogger←TG] Tab communication error:', err.message);
+    await sendTelegramError(config, `❌ Error: ${err.message}`);
+    return { ok: false, error: err.message };
+  }
+}
+
+// Send error notification back to Telegram
+async function sendTelegramError(config, errorMsg) {
+  try {
+    const body = {
+      chat_id: config.chatId,
+      text: `<b>[Zalo Logger]</b>\n${escapeHtmlTelegram(errorMsg)}`,
+      parse_mode: 'HTML',
+    };
+    if (config.topicId) body.message_thread_id = Number(config.topicId);
+
+    await fetch(`https://api.telegram.org/bot${config.botToken}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+  } catch (err) {
+    console.warn('[ZaloLogger←TG] Failed to send error to Telegram:', err.message);
+  }
+}
+</file>
+
+<file path="content-script.js">
+// Bridge between inject.js (MAIN_WORLD) and service-worker
+
+// Forward: inject.js → service-worker (Zalo messages)
+window.addEventListener('message', (event) => {
+  if (event.source !== window) return;
+  if (event.data?.type !== 'ZALO_DOM_MSG') return;
+
+  chrome.runtime.sendMessage({
+    type: 'ZALO_DOM_MSG',
+    message: event.data.message,
+  });
+});
+
+// Reverse: service-worker → inject.js (Telegram replies → Zalo send)
+let sendCorrelationId = 0;
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.type !== 'ZALO_SEND_MSG') return;
+
+  const corrId = ++sendCorrelationId;
+
+  // Forward to inject.js (MAIN_WORLD) with correlation ID
+  window.postMessage({
+    type: 'ZALO_SEND_MSG',
+    conversationId: message.conversationId,
+    text: message.text,
+    corrId,
+  }, 'https://chat.zalo.me');
+
+  // Listen for response from inject.js matching corrId
+  const handler = (event) => {
+    if (event.source !== window) return;
+    if (event.data?.type !== 'ZALO_SEND_RESULT') return;
+    if (event.data.corrId !== corrId) return;
+    window.removeEventListener('message', handler);
+    clearTimeout(timeout);
+    sendResponse(event.data);
+  };
+  window.addEventListener('message', handler);
+
+  // Timeout fallback (10s)
+  const timeout = setTimeout(() => {
+    window.removeEventListener('message', handler);
+    sendResponse({ ok: false, error: 'Timeout waiting for inject.js' });
+  }, 10000);
+
+  return true; // keep sendResponse channel open (async)
+});
+</file>
+
+<file path="inject.js">
+// DOM polling approach: scan chat area every 2s for new messages
+// Zalo uses virtual DOM so MutationObserver doesn't work reliably
+// Runs in MAIN_WORLD to access page DOM directly
+
+const SEEN_MSG_IDS = new Set();
+const POLL_INTERVAL = 2000;
+
+// Get current conversation name from multiple sources
+function getConversationName() {
+  // 1. Try input placeholder: "Nhập @, tin nhắn tới Inet Đức Hòa"
+  const input = document.querySelector('#richInput');
+  if (input) {
+    const trailer = input.getAttribute('data-trailer');
+    if (trailer) return trailer.trim();
+    const placeholder = input.getAttribute('placeholder') || '';
+    const match = placeholder.match(/tin nhắn tới (.+)/);
+    if (match) return match[1].trim();
+  }
+  // 2. Try chat header text
+  const header = document.querySelector('p.chat-title__name')
+    || document.querySelector('.chat-title span')
+    || document.querySelector('[data-translate-inner="MODULE_CONTACT_TITLE"]');
+  return header?.textContent?.trim() || 'unknown';
+}
+
+// Get sender name for a message (handles group chats)
+function getSenderName(msgFrame, isOutgoing) {
+  if (isOutgoing) return 'me';
+  // In group chats, sender name appears above the message
+  const senderEl = msgFrame.querySelector('.msg-item__name')
+    || msgFrame.querySelector('[data-id*="SenderName"]')
+    || msgFrame.closest('.message-content-wrapper')?.querySelector('.msg-item__name');
+  if (senderEl) return senderEl.textContent.trim();
+  // 1-on-1 chat: sender = conversation name
+  return getConversationName();
+}
+
+// Extract message data from a message frame element
+function extractMessage(msgFrame) {
+  const frameId = msgFrame.id;
+  if (!frameId || SEEN_MSG_IDS.has(frameId)) return null;
+  SEEN_MSG_IDS.add(frameId);
+
+  const isOutgoing = msgFrame.classList.contains('me');
+
+  // Text content: span.text inside the message
+  const textEl = msgFrame.querySelector('span.text');
+  const content = textEl?.textContent?.trim() || '';
+
+  // Detect media types if no text
+  let contentType = 'text';
+  if (!content) {
+    if (msgFrame.querySelector('[data-id*="Img"]') || msgFrame.querySelector('img.msg-img')) contentType = 'image';
+    else if (msgFrame.querySelector('[data-id*="File"]')) contentType = 'file';
+    else if (msgFrame.querySelector('[data-id*="Sticker"]')) contentType = 'sticker';
+    else contentType = 'unknown';
+  }
+
+  const timeEl = msgFrame.querySelector('.card-send-time');
+  const timeText = timeEl?.textContent?.trim() || '';
+  const dataQid = msgFrame.getAttribute('data-qid') || '';
+
+  return {
+    id: frameId,
+    direction: isOutgoing ? 'outgoing' : 'incoming',
+    sender: getSenderName(msgFrame, isOutgoing),
+    content: content || `[${contentType}]`,
+    contentType,
+    conversationId: getConversationName(),
+    timestamp: Date.now(),
+    timeDisplay: timeText,
+    dataQid,
+  };
+}
+
+// Flag to prevent polling interference during send (used by reverse direction below)
+let isSending = false;
+
+// Poll: scan all visible message frames, send new ones
+function pollMessages() {
+  if (isSending) return; // skip polling while sending reply
+  const frames = document.querySelectorAll('div[id^="message-frame_"]');
+  let newCount = 0;
+
+  frames.forEach(frame => {
+    const msg = extractMessage(frame);
+    if (msg) {
+      window.postMessage({ type: 'ZALO_DOM_MSG', message: msg }, '*');
+      newCount++;
+    }
+  });
+
+  if (newCount > 0) {
+    console.log(`[ZaloLogger] Found ${newCount} new message(s)`);
+  }
+}
+
+// --- Sidebar polling: capture preview messages from non-active conversations ---
+
+// Track sidebar previews: key = animDataId, value = last seen preview text
+const SIDEBAR_PREVIEWS = new Map();
+
+function pollSidebar() {
+  const items = document.querySelectorAll('div.msg-item[data-id="div_TabMsg_ThrdChItem"]');
+  let newCount = 0;
+
+  items.forEach(item => {
+    const animId = item.getAttribute('anim-data-id');
+    if (!animId) return;
+
+    // Check if has unread badge
+    const unreadBadge = item.querySelector('.z-noti-badge');
+    const hasUnread = !!unreadBadge;
+
+    // Get conversation name
+    const nameEl = item.querySelector('.conv-item-title__name .truncate');
+    const convName = nameEl?.textContent?.trim()?.replace(/\u00a0/g, ' ') || 'unknown';
+
+    // Get preview text
+    const previewEl = item.querySelector('.conv-message .truncate span');
+    const previewText = previewEl?.textContent?.trim() || '';
+
+    if (!previewText) return;
+
+    // Dedup: only send if preview changed for this conversation
+    const prevPreview = SIDEBAR_PREVIEWS.get(animId);
+    if (prevPreview === previewText) return;
+    SIDEBAR_PREVIEWS.set(animId, previewText);
+
+    // Skip if this is the active conversation (already captured by chat area polling)
+    const activeConv = getConversationName();
+    if (convName === activeConv) return;
+
+    // Check if preview starts with "Bạn:" (our own sent message preview)
+    const isOwnPreview = previewText.startsWith('Bạn:') || previewText.startsWith('Bạn: ');
+
+    const msg = {
+      id: `sidebar_${animId}_${Date.now()}`,
+      direction: isOwnPreview ? 'outgoing' : 'incoming',
+      sender: isOwnPreview ? 'me' : convName,
+      content: isOwnPreview ? previewText.replace(/^Bạn:\s*/, '') : previewText,
+      contentType: 'text',
+      conversationId: convName,
+      timestamp: Date.now(),
+      timeDisplay: '',
+      source: 'sidebar-preview',
+      hasUnread,
+    };
+
+    window.postMessage({ type: 'ZALO_DOM_MSG', message: msg }, '*');
+    newCount++;
+  });
+
+  if (newCount > 0) {
+    console.log(`[ZaloLogger] Sidebar: ${newCount} new preview(s)`);
+  }
+}
+
+// --- Reverse direction: receive send commands from Telegram replies ---
+
+// Find conversation in sidebar and click it
+async function findAndClickConversation(conversationId) {
+  // Check if already in the right conversation
+  const currentConv = getConversationName();
+  if (currentConv === conversationId) return true;
+
+  // Search sidebar items
+  const items = document.querySelectorAll('.conv-item-title__name .truncate');
+  let target = null;
+
+  // Exact match first
+  for (const el of items) {
+    const name = el.textContent?.trim()?.replace(/\u00a0/g, ' ');
+    if (name === conversationId) {
+      target = el;
+      break;
+    }
+  }
+
+  if (!target) {
+    console.warn(`[ZaloLogger←TG] Exact match not found for: "${conversationId}"`);
+    return false;
+  }
+
+  // Click the sidebar item (ancestor .msg-item)
+  const msgItem = target.closest('div.msg-item') || target.closest('[data-id="div_TabMsg_ThrdChItem"]');
+  if (msgItem) {
+    msgItem.click();
+    // Wait for conversation to switch
+    await new Promise(r => setTimeout(r, 500));
+    return true;
+  }
+
+  return false;
+}
+
+// Wait for #richInput to be ready
+async function waitForInputReady(maxWaitMs = 5000) {
+  const start = Date.now();
+  while (Date.now() - start < maxWaitMs) {
+    const input = document.querySelector('#richInput');
+    if (input && input.offsetParent !== null) return true;
+    await new Promise(r => setTimeout(r, 200));
+  }
+  return false;
+}
+
+// Type text into #richInput and send via Enter key
+async function typeAndSend(text) {
+  const input = document.querySelector('#richInput');
+  if (!input) return false;
+
+  // Focus input
+  input.focus();
+
+  // Clear existing content
+  input.innerHTML = '';
+
+  // Try execCommand first (best compatibility with contenteditable)
+  const inserted = document.execCommand('insertText', false, text);
+
+  if (!inserted) {
+    // Fallback: set innerText + dispatch input event
+    input.innerText = text;
+    input.dispatchEvent(new InputEvent('input', {
+      bubbles: true,
+      inputType: 'insertText',
+      data: text,
+    }));
+  }
+
+  // Small delay for Zalo to process input
+  await new Promise(r => setTimeout(r, 100));
+
+  // Send via Enter key
+  const enterEvent = new KeyboardEvent('keydown', {
+    key: 'Enter',
+    code: 'Enter',
+    keyCode: 13,
+    which: 13,
+    bubbles: true,
+  });
+  input.dispatchEvent(enterEvent);
+
+  // Assume success after Enter dispatch — Zalo clear timing is inconsistent
+  // and checking innerText is unreliable (may still contain DOM nodes)
+  await new Promise(r => setTimeout(r, 300));
+  return true;
+}
+
+// Orchestrator: find conversation → wait for input → type and send
+const MAX_REPLY_LENGTH = 2000;
+
+async function handleSendMessage(conversationId, text) {
+  if (text.length > MAX_REPLY_LENGTH) {
+    return { ok: false, error: `Message too long (${text.length}/${MAX_REPLY_LENGTH} chars)` };
+  }
+
+  isSending = true;
+  try {
+    const found = await findAndClickConversation(conversationId);
+    if (!found) {
+      return { ok: false, error: `Conversation not found: ${conversationId}` };
+    }
+
+    const ready = await waitForInputReady(5000);
+    if (!ready) {
+      return { ok: false, error: 'Input not ready (timeout)' };
+    }
+
+    const sent = await typeAndSend(text);
+    if (!sent) {
+      return { ok: false, error: 'Send may have failed (input not cleared)' };
+    }
+
+    return { ok: true };
+  } catch (err) {
+    return { ok: false, error: err.message };
+  } finally {
+    isSending = false;
+  }
+}
+
+// Listen for send commands from content-script
+window.addEventListener('message', (event) => {
+  if (event.source !== window) return;
+  if (event.data?.type !== 'ZALO_SEND_MSG') return;
+
+  const corrId = event.data.corrId;
+  handleSendMessage(event.data.conversationId, event.data.text)
+    .then(result => {
+      window.postMessage({ type: 'ZALO_SEND_RESULT', corrId, ...result }, '*');
+    });
+});
+
+// Wait for chat UI to load, then start polling
+function init() {
+  const check = setInterval(() => {
+    const hasMessages = document.querySelector('div[id^="message-frame_"]')
+      || document.querySelector('div.msg-item');
+    if (hasMessages) {
+      clearInterval(check);
+      console.log('[ZaloLogger] Chat area found, starting poll (every 2s)');
+      pollMessages(); // initial scan of chat area
+      setInterval(pollMessages, POLL_INTERVAL);
+      setInterval(pollSidebar, POLL_INTERVAL);
+    }
+  }, 1000);
+
+  setTimeout(() => clearInterval(check), 60000);
+}
+
+init();
+</file>
+
+<file path="manifest.json">
+{
+  "manifest_version": 3,
+  "name": "Zalo Message Logger",
+  "version": "0.1.0",
+  "description": "Log Zalo messages to JSON",
+  "permissions": ["storage", "alarms"],
+  "host_permissions": ["https://chat.zalo.me/*"],
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "action": {
+    "default_popup": "popup/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://chat.zalo.me/*"],
+      "js": ["inject.js"],
+      "world": "MAIN",
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://chat.zalo.me/*"],
+      "js": ["content-script.js"],
+      "run_at": "document_start"
+    }
+  ]
+}
+</file>
+
+<file path="popup/popup.html">
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <!-- Tab bar -->
+  <div id="tabs">
+    <button class="tab active" data-tab="messages">Messages</button>
+    <button class="tab" data-tab="telegram">Telegram</button>
+  </div>
+
+  <!-- Messages tab -->
+  <div id="tab-messages" class="tab-panel active">
+    <!-- Stats bar -->
+    <div id="stats">
+      <span id="total-count">0</span> messages |
+      <span id="storage-used">0</span> KB |
+      Last: <span id="last-updated">-</span>
+    </div>
+
+    <!-- Filters -->
+    <div id="filters">
+      <select id="filter-direction">
+        <option value="all">All</option>
+        <option value="incoming">Incoming</option>
+        <option value="outgoing">Outgoing</option>
+      </select>
+      <input id="filter-keyword" placeholder="Search..." />
+      <select id="filter-conversation">
+        <option value="all">All conversations</option>
+      </select>
+    </div>
+
+    <!-- Actions -->
+    <div id="actions">
+      <button id="btn-export">Export JSON</button>
+      <button id="btn-clear">Clear All</button>
+      <button id="btn-refresh">Refresh</button>
+      <label id="toggle-label">
+        <input type="checkbox" id="btn-toggle" checked /> Logging
+      </label>
+    </div>
+
+    <!-- Message list -->
+    <div id="message-list"></div>
+  </div>
+
+  <!-- Telegram tab -->
+  <div id="tab-telegram" class="tab-panel" style="display:none">
+    <div class="tg-section">
+      <label><input type="checkbox" id="tg-enabled"> Enable Telegram notifications</label>
+      <label><input type="checkbox" id="tg-reply-enabled"> Enable reply (Telegram → Zalo)</label>
+    </div>
+    <div class="tg-section">
+      <label>Bot Token</label>
+      <input id="tg-bot-token" type="password" placeholder="123456:ABC-DEF...">
+      <label>Chat ID</label>
+      <input id="tg-chat-id" type="text" placeholder="-100123456789">
+      <label>Topic ID <small>(optional)</small></label>
+      <input id="tg-topic-id" type="text" placeholder="Leave empty if not needed">
+    </div>
+    <div class="tg-section">
+      <div class="tg-section-header">
+        <strong>Rules</strong>
+        <button id="tg-add-rule">+ Add</button>
+      </div>
+      <div id="tg-rules-list"></div>
+    </div>
+    <div class="tg-actions">
+      <button id="tg-test">Test Connection</button>
+      <button id="tg-save">Save</button>
+      <span id="tg-status"></span>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+  <script src="telegram-settings.js"></script>
+</body>
+</html>
+</file>
+
+<file path="README.md">
+# Zalo Message Logger
+
+Extension trình duyệt (Chrome/Edge) giúp ghi lại tin nhắn Zalo Web và gửi thông báo qua Telegram theo bộ lọc tùy chỉnh.
+
+## Tính năng
+
+- Tự động ghi lại tin nhắn từ cuộc trò chuyện đang mở và sidebar
+- Lọc theo chiều (gửi/nhận), từ khóa, cuộc trò chuyện
+- Xuất dữ liệu JSON để lưu trữ
+- Gửi thông báo Telegram theo rules: user, keyword, conversation, content type
+
+## Cài đặt
+
+1. Tải mã nguồn: **Code → Download ZIP** hoặc `git clone`
+2. Mở `chrome://extensions` → bật **Developer mode**
+3. Nhấn **Load unpacked** → chọn thư mục `zalo-message-logger`
+
+![Cài đặt extension](https://github.com/achoo254/zalo-message-logger/raw/main/docs/install.png)
+
+## Sử dụng
+
+1. Truy cập [chat.zalo.me](https://chat.zalo.me) — extension tự động ghi log
+2. Click icon extension để xem tin nhắn, lọc và xuất JSON
+
+![Giao diện popup](https://github.com/achoo254/zalo-message-logger/raw/main/docs/popup.png)
+
+3. Tab **Telegram**: nhập Bot Token, Chat ID, thêm rules → **Save**
+
+![Cài đặt Telegram](https://github.com/achoo254/zalo-message-logger/raw/main/docs/telegram.png)
+
+## Reply từ Telegram → Zalo
+
+Trả lời tin nhắn Zalo trực tiếp từ Telegram — không cần mở Zalo.
+
+### Bật tính năng
+
+Tab **Telegram** → tick **Enable reply (Telegram → Zalo)**
+
+### Cách dùng
+
+1. Mỗi tin nhắn chuyển tiếp có nút **↩️ [Tên người gửi]**
+2. Nhấn nút → bot hiện khung reply với thông tin người gửi + cuộc trò chuyện
+3. Gõ nội dung → **Enter**
+4. Extension tự động mở đúng cuộc trò chuyện trên Zalo Web và gửi tin nhắn
+5. Bot cập nhật trạng thái: ✅ **Sent** hoặc ❌ **Failed**
+
+### Lưu ý
+
+- Cần mở tab [chat.zalo.me](https://chat.zalo.me) để extension gửi được tin nhắn
+- Cuộc trò chuyện phải hiển thị trong sidebar (đã chat gần đây)
+- Hỗ trợ cả chat 1-1 và nhóm
+
+## Yêu cầu
+
+- Chrome hoặc Edge (Manifest v3)
+- Đăng nhập [chat.zalo.me](https://chat.zalo.me)
+</file>
+
+<file path="service-worker.js">
+importScripts('telegram-notifier.js');
+importScripts('telegram-reply-poller.js');
+
+// Service worker: receive DOM-scraped messages, store in chrome.storage.local
+
+let unreadCount = 0;
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.type !== 'ZALO_DOM_MSG') return;
+
+  chrome.storage.local.get('logging_enabled', ({ logging_enabled }) => {
+    if (logging_enabled === false) return;
+
+    const msg = message.message;
+    console.log(`[ZaloLogger ${msg.direction}] ${msg.sender}: ${msg.content}`);
+
+    storeMessage(msg);
+    incrementBadge();
+    checkAndNotifyTelegram(msg);
+  });
+});
+
+// --- Storage ---
+
+async function storeMessage(msg) {
+  const key = `messages_${msg.conversationId || 'unknown'}`;
+  const result = await chrome.storage.local.get(key);
+  const messages = result[key] || [];
+
+  // Dedup by frame ID
+  if (msg.id && messages.some(m => m.id === msg.id)) return false;
+
+  messages.push(msg);
+
+  // Cap per conversation (keep last 1000)
+  if (messages.length > 1000) messages.splice(0, messages.length - 1000);
+
+  await chrome.storage.local.set({ [key]: messages });
+  await updateStats(1);
+
+  // Auto-cleanup check every 100 messages
+  const { meta_stats } = await chrome.storage.local.get('meta_stats');
+  if (meta_stats && meta_stats.totalCount % 100 === 0) {
+    await checkStorageQuota();
+  }
+
+  return true;
+}
+
+async function updateStats(addCount) {
+  const { meta_stats = { totalCount: 0, lastUpdated: 0 } } =
+    await chrome.storage.local.get('meta_stats');
+  meta_stats.totalCount += addCount;
+  meta_stats.lastUpdated = Date.now();
+  await chrome.storage.local.set({ meta_stats });
+}
+
+// --- Storage Cleanup ---
+
+async function checkStorageQuota() {
+  const usage = await navigator.storage.estimate();
+  const usedMB = (usage.usage || 0) / 1024 / 1024;
+  if (usedMB > 8) await cleanupOldMessages();
+}
+
+async function cleanupOldMessages() {
+  const all = await chrome.storage.local.get(null);
+  const msgKeys = Object.keys(all).filter(k => k.startsWith('messages_'));
+  for (const key of msgKeys) {
+    const msgs = all[key];
+    if (msgs.length > 200) {
+      await chrome.storage.local.set({ [key]: msgs.slice(-200) });
+    }
+  }
+}
+
+// --- Badge ---
+
+function incrementBadge() {
+  unreadCount++;
+  chrome.action.setBadgeText({ text: String(unreadCount) });
+  chrome.action.setBadgeBackgroundColor({ color: '#4CAF50' });
+}
+
+chrome.runtime.onConnect.addListener((port) => {
+  if (port.name === 'popup') {
+    unreadCount = 0;
+    chrome.action.setBadgeText({ text: '' });
+  }
+});
+
+// --- Telegram Reply Polling ---
+
+// Alarm acts as keepalive — restarts poll loop if service worker was killed
+chrome.alarms.onAlarm.addListener((alarm) => {
+  if (alarm.name === REPLY_POLL_ALARM && !isPolling) {
+    chrome.storage.local.get('telegram_config', ({ telegram_config }) => {
+      if (telegram_config?.enabled && telegram_config?.replyEnabled) {
+        isPolling = true;
+        pollLoop();
+      }
+    });
+  }
+});
+
+// Start polling on service worker load if enabled
+chrome.storage.local.get('telegram_config', ({ telegram_config }) => {
+  if (telegram_config?.enabled && telegram_config?.replyEnabled) {
+    startReplyPolling();
+  }
+});
+
+// Toggle polling when config changes
+chrome.storage.onChanged.addListener((changes) => {
+  if (!changes.telegram_config) return;
+  const config = changes.telegram_config.newValue;
+  if (config?.enabled && config?.replyEnabled) {
+    startReplyPolling();
+  } else {
+    stopReplyPolling();
+  }
+});
+</file>
+
+<file path="popup/telegram-settings.js">
+// Telegram settings UI - config + rules CRUD for popup
+
+const tgElements = {
+  enabled: document.getElementById('tg-enabled'),
+  botToken: document.getElementById('tg-bot-token'),
+  chatId: document.getElementById('tg-chat-id'),
+  topicId: document.getElementById('tg-topic-id'),
+  rulesList: document.getElementById('tg-rules-list'),
+  addRule: document.getElementById('tg-add-rule'),
+  testBtn: document.getElementById('tg-test'),
+  saveBtn: document.getElementById('tg-save'),
+  replyEnabled: document.getElementById('tg-reply-enabled'),
+  status: document.getElementById('tg-status'),
+};
+
+let currentRules = [];
+
+// --- Load / Save ---
+
+async function loadTelegramConfig() {
+  const result = await chrome.storage.local.get(['telegram_config', 'telegram_rules']);
+  const config = result.telegram_config || {};
+  currentRules = result.telegram_rules || [];
+
+  tgElements.enabled.checked = !!config.enabled;
+  tgElements.replyEnabled.checked = !!config.replyEnabled;
+  tgElements.botToken.value = config.botToken || '';
+  tgElements.chatId.value = config.chatId || '';
+  tgElements.topicId.value = config.topicId || '';
+
+  renderRules();
+}
+
+async function saveTelegramConfig() {
+  const config = {
+    enabled: tgElements.enabled.checked,
+    replyEnabled: tgElements.replyEnabled.checked,
+    botToken: tgElements.botToken.value.trim(),
+    chatId: tgElements.chatId.value.trim(),
+    topicId: tgElements.topicId.value.trim() || null,
+  };
+
+  // Validate bot token format if enabled
+  if (config.enabled && config.botToken && !config.botToken.includes(':')) {
+    showStatus('Invalid bot token format', true);
+    return;
+  }
+
+  const rules = collectRules();
+
+  await chrome.storage.local.set({
+    telegram_config: config,
+    telegram_rules: rules,
+  });
+
+  currentRules = rules;
+  showStatus('Saved!');
+}
+
+// --- Rules CRUD ---
+
+function renderRules() {
+  tgElements.rulesList.innerHTML = '';
+  currentRules.forEach((rule, i) => {
+    const div = document.createElement('div');
+    div.className = 'tg-rule';
+    div.innerHTML = `
+      <select class="tg-rule-type">
+        <option value="user" ${rule.type === 'user' ? 'selected' : ''}>User name</option>
+        <option value="keyword" ${rule.type === 'keyword' ? 'selected' : ''}>Keyword</option>
+        <option value="conversation" ${rule.type === 'conversation' ? 'selected' : ''}>Conversation</option>
+        <option value="content_type" ${rule.type === 'content_type' ? 'selected' : ''}>Content type</option>
+      </select>
+      <input class="tg-rule-value" value="${escapeAttr(rule.value || '')}" placeholder="Value...">
+      <select class="tg-rule-direction">
+        <option value="all" ${rule.direction === 'all' ? 'selected' : ''}>All</option>
+        <option value="incoming" ${rule.direction === 'incoming' ? 'selected' : ''}>In</option>
+        <option value="outgoing" ${rule.direction === 'outgoing' ? 'selected' : ''}>Out</option>
+      </select>
+      <button class="tg-rule-delete" data-index="${i}">\u2715</button>
+    `;
+    tgElements.rulesList.appendChild(div);
+  });
+}
+
+function escapeAttr(str) {
+  return str.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function addRule() {
+  currentRules.push({ type: 'keyword', value: '', direction: 'all' });
+  renderRules();
+}
+
+function deleteRule(index) {
+  currentRules.splice(index, 1);
+  renderRules();
+}
+
+function collectRules() {
+  const rows = tgElements.rulesList.querySelectorAll('.tg-rule');
+  const rules = [];
+  rows.forEach(row => {
+    const value = row.querySelector('.tg-rule-value').value.trim();
+    if (!value) return; // skip empty rules
+    rules.push({
+      type: row.querySelector('.tg-rule-type').value,
+      value,
+      direction: row.querySelector('.tg-rule-direction').value,
+    });
+  });
+  return rules;
+}
+
+// --- Test Connection ---
+
+async function testConnection() {
+  const token = tgElements.botToken.value.trim();
+  const chatId = tgElements.chatId.value.trim();
+  const topicId = tgElements.topicId.value.trim();
+
+  if (!token || !chatId) {
+    showStatus('Enter bot token and chat ID first', true);
+    return;
+  }
+
+  showStatus('Testing...');
+  const body = {
+    chat_id: chatId,
+    text: '✅ Zalo Message Logger - Test connection successful!',
+    parse_mode: 'HTML',
+  };
+  if (topicId) body.message_thread_id = Number(topicId);
+
+  try {
+    const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    const data = await res.json();
+    if (data.ok) {
+      showStatus('Success! Check Telegram.');
+    } else {
+      showStatus(`Error: ${data.description}`, true);
+    }
+  } catch (err) {
+    showStatus(`Failed: ${err.message}`, true);
+  }
+}
+
+// --- UI Helpers ---
+
+function showStatus(text, isError) {
+  tgElements.status.textContent = text;
+  tgElements.status.style.color = isError ? '#e53935' : '#4CAF50';
+  if (!isError) {
+    setTimeout(() => { tgElements.status.textContent = ''; }, 2000);
+  }
+}
+
+// --- Auto-save (debounced) ---
+// Chrome popup destroys on close, so auto-save to prevent data loss
+
+let autoSaveTimer = null;
+function scheduleAutoSave() {
+  clearTimeout(autoSaveTimer);
+  autoSaveTimer = setTimeout(() => saveTelegramConfig(), 500);
+}
+
+// --- Events ---
+
+tgElements.saveBtn.addEventListener('click', saveTelegramConfig);
+tgElements.testBtn.addEventListener('click', testConnection);
+tgElements.addRule.addEventListener('click', () => { addRule(); scheduleAutoSave(); });
+tgElements.enabled.addEventListener('change', scheduleAutoSave);
+tgElements.replyEnabled.addEventListener('change', scheduleAutoSave);
+tgElements.botToken.addEventListener('input', scheduleAutoSave);
+tgElements.chatId.addEventListener('input', scheduleAutoSave);
+tgElements.topicId.addEventListener('input', scheduleAutoSave);
+tgElements.rulesList.addEventListener('click', (e) => {
+  if (e.target.classList.contains('tg-rule-delete')) {
+    deleteRule(Number(e.target.dataset.index));
+    scheduleAutoSave();
+  }
+});
+// Auto-save when rule fields change (delegated)
+tgElements.rulesList.addEventListener('input', scheduleAutoSave);
+tgElements.rulesList.addEventListener('change', scheduleAutoSave);
+
+// --- Init ---
+loadTelegramConfig();
+</file>
+
+<file path="telegram-notifier.js">
+// Telegram notification module - rule matching + Telegram Bot API
+// Used by service-worker via importScripts()
+
+const TELEGRAM_SENT_IDS = new Set();
+const TELEGRAM_DEDUP_MAX = 500;
+
+// Escape HTML special chars to prevent injection in Telegram messages
+function escapeHtmlTelegram(str) {
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+// Check if message matches any rule (OR logic)
+function matchRules(msg, rules) {
+  for (const rule of rules) {
+    // Direction filter
+    if (rule.direction !== 'all' && rule.direction !== msg.direction) continue;
+
+    const val = rule.value.toLowerCase();
+    let matched = false;
+
+    switch (rule.type) {
+      case 'user':
+        // Match sender name OR conversationId (outgoing has sender="me")
+        matched = (msg.sender || '').toLowerCase().includes(val)
+          || (msg.conversationId || '').toLowerCase().includes(val);
+        break;
+      case 'keyword':
+        matched = (msg.content || '').toLowerCase().includes(val);
+        break;
+      case 'conversation':
+        matched = (msg.conversationId || '').toLowerCase().includes(val);
+        break;
+      case 'content_type':
+        matched = (msg.contentType || '').toLowerCase() === val;
+        break;
+    }
+
+    if (matched) return true;
+  }
+  return false;
+}
+
+// Send message to Telegram via Bot API
+async function sendTelegramMessage(config, msg) {
+  const time = msg.timestamp ? new Date(msg.timestamp).toLocaleString('vi-VN') : (msg.timeDisplay || '');
+  const text = `<b>${escapeHtmlTelegram(msg.sender || '?')}</b>\n📍 ${escapeHtmlTelegram(msg.conversationId || '?')}\n🕐 ${escapeHtmlTelegram(time)}\n${escapeHtmlTelegram(msg.content || '')}`;
+
+  const body = {
+    chat_id: config.chatId,
+    text,
+    parse_mode: 'HTML',
+    reply_markup: {
+      inline_keyboard: [[
+        { text: `↩️ ${msg.sender || '?'}`, callback_data: 'reply' },
+      ]],
+    },
+  };
+  if (config.topicId) body.message_thread_id = Number(config.topicId);
+
+  try {
+    const res = await fetch(`https://api.telegram.org/bot${config.botToken}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    const data = await res.json();
+    return { ok: data.ok, error: data.ok ? null : data.description };
+  } catch (err) {
+    return { ok: false, error: err.message };
+  }
+}
+
+// Parse conversation name from a Telegram reply_to_message text
+// Looks for line starting with 📍 marker
+function parseConversationIdFromReply(text) {
+  if (!text) return null;
+  const lines = text.split('\n');
+  for (const line of lines) {
+    if (line.startsWith('📍 ')) {
+      return line.slice(2).trim();
+    }
+  }
+  return null;
+}
+
+// Parse sender name from Telegram message text (first line, bold tag)
+function parseSenderFromReply(text) {
+  if (!text) return null;
+  // First line format: <b>SenderName</b> or just SenderName (plain text after HTML strip)
+  const firstLine = text.split('\n')[0];
+  // Plain text (entities stripped by Telegram in reply_to_message.text)
+  if (firstLine && !firstLine.startsWith('📍') && !firstLine.startsWith('🕐')) {
+    return firstLine.trim();
+  }
+  return null;
+}
+
+// Main entry: check rules and send notification if matched
+async function checkAndNotifyTelegram(msg) {
+  try {
+    const result = await chrome.storage.local.get(['telegram_config', 'telegram_rules']);
+    const config = result.telegram_config;
+    const rules = result.telegram_rules || [];
+
+    // Guard checks
+    if (!config || !config.enabled || !config.botToken || !config.chatId) return;
+    if (rules.length === 0) return;
+
+    // Dedup
+    if (TELEGRAM_SENT_IDS.has(msg.id)) return;
+    TELEGRAM_SENT_IDS.add(msg.id);
+    if (TELEGRAM_SENT_IDS.size > TELEGRAM_DEDUP_MAX) {
+      const arr = Array.from(TELEGRAM_SENT_IDS);
+      arr.splice(0, arr.length - TELEGRAM_DEDUP_MAX);
+      TELEGRAM_SENT_IDS.clear();
+      arr.forEach(id => TELEGRAM_SENT_IDS.add(id));
+    }
+
+    if (!matchRules(msg, rules)) return;
+
+    const res = await sendTelegramMessage(config, msg);
+    if (res.ok) {
+      console.log(`[ZaloLogger→TG] Sent: ${msg.sender} - ${(msg.content || '').slice(0, 30)}`);
+    } else {
+      console.warn(`[ZaloLogger→TG] Error: ${res.error}`);
+    }
+  } catch (err) {
+    console.warn('[ZaloLogger→TG] Failed:', err.message);
+  }
+}
+</file>
+
+</files>
