@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "Zalo Message Logger",
+  "version": "0.1.0",
+  "description": "Log Zalo messages to JSON",
+  "permissions": ["storage"],
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "action": {
+    "default_popup": "popup/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://chat.zalo.me/*"],
+      "js": ["inject.js"],
+      "world": "MAIN",
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://chat.zalo.me/*"],
+      "js": ["content-script.js"],
+      "run_at": "document_start"
+    }
+  ]
+}

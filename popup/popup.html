@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <!-- Tab bar -->
+  <div id="tabs">
+    <button class="tab active" data-tab="messages">Messages</button>
+    <button class="tab" data-tab="telegram">Telegram</button>
+  </div>
+
+  <!-- Messages tab -->
+  <div id="tab-messages" class="tab-panel active">
+    <!-- Stats bar -->
+    <div id="stats">
+      <span id="total-count">0</span> messages |
+      <span id="storage-used">0</span> KB |
+      Last: <span id="last-updated">-</span>
+    </div>
+
+    <!-- Filters -->
+    <div id="filters">
+      <select id="filter-direction">
+        <option value="all">All</option>
+        <option value="incoming">Incoming</option>
+        <option value="outgoing">Outgoing</option>
+      </select>
+      <input id="filter-keyword" placeholder="Search..." />
+      <select id="filter-conversation">
+        <option value="all">All conversations</option>
+      </select>
+    </div>
+
+    <!-- Actions -->
+    <div id="actions">
+      <button id="btn-export">Export JSON</button>
+      <button id="btn-clear">Clear All</button>
+      <button id="btn-refresh">Refresh</button>
+      <label id="toggle-label">
+        <input type="checkbox" id="btn-toggle" checked /> Logging
+      </label>
+    </div>
+
+    <!-- Message list -->
+    <div id="message-list"></div>
+  </div>
+
+  <!-- Telegram tab -->
+  <div id="tab-telegram" class="tab-panel" style="display:none">
+    <div class="tg-section">
+      <label><input type="checkbox" id="tg-enabled"> Enable Telegram notifications</label>
+    </div>
+    <div class="tg-section">
+      <label>Bot Token</label>
+      <input id="tg-bot-token" type="password" placeholder="123456:ABC-DEF...">
+      <label>Chat ID</label>
+      <input id="tg-chat-id" type="text" placeholder="-100123456789">
+      <label>Topic ID <small>(optional)</small></label>
+      <input id="tg-topic-id" type="text" placeholder="Leave empty if not needed">
+    </div>
+    <div class="tg-section">
+      <div class="tg-section-header">
+        <strong>Rules</strong>
+        <button id="tg-add-rule">+ Add</button>
+      </div>
+      <div id="tg-rules-list"></div>
+    </div>
+    <div class="tg-actions">
+      <button id="tg-test">Test Connection</button>
+      <button id="tg-save">Save</button>
+      <span id="tg-status"></span>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+  <script src="telegram-settings.js"></script>
+</body>
+</html>

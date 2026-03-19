@@ -1,0 +1,136 @@
+body {
+  width: 400px;
+  max-height: 500px;
+  margin: 0;
+  padding: 8px;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 13px;
+  overflow-y: auto;
+}
+
+#stats {
+  padding: 6px 8px;
+  background: #f5f5f5;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  font-size: 12px;
+  color: #666;
+}
+
+#filters {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+#filters select, #filters input {
+  flex: 1;
+  padding: 4px 6px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+#actions {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 8px;
+  align-items: center;
+}
+
+#actions button {
+  padding: 4px 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+#actions button:hover {
+  background: #f0f0f0;
+}
+
+#toggle-label {
+  margin-left: auto;
+  font-size: 12px;
+  color: #666;
+  cursor: pointer;
+}
+
+#message-list {
+  max-height: 360px;
+  overflow-y: auto;
+}
+
+.msg {
+  padding: 6px 8px;
+  margin-bottom: 4px;
+  border-radius: 4px;
+  border-left: 3px solid #ccc;
+}
+
+.msg-incoming {
+  border-left-color: #4CAF50;
+  background: #f9fff9;
+}
+
+.msg-outgoing {
+  border-left-color: #2196F3;
+  background: #f5f9ff;
+}
+
+.msg-header {
+  display: flex;
+  gap: 6px;
+  font-size: 11px;
+  color: #888;
+  margin-bottom: 2px;
+}
+
+.msg-sender {
+  font-weight: 600;
+  color: #333;
+}
+
+.msg-time {
+  margin-left: auto;
+}
+
+.msg-content {
+  font-family: 'Consolas', monospace;
+  font-size: 12px;
+  word-break: break-all;
+}
+
+.empty {
+  text-align: center;
+  color: #999;
+  padding: 40px 0;
+}
+
+/* --- Tabs --- */
+#tabs { display: flex; gap: 0; margin-bottom: 8px; border-bottom: 2px solid #eee; }
+.tab { padding: 6px 16px; border: none; background: none; cursor: pointer; font-size: 13px; color: #888; border-bottom: 2px solid transparent; margin-bottom: -2px; }
+.tab.active { color: #333; border-bottom-color: #4CAF50; font-weight: 600; }
+.tab:hover { color: #333; }
+
+/* --- Telegram settings --- */
+.tg-section { margin-bottom: 10px; }
+.tg-section label { display: block; font-size: 12px; color: #666; margin: 4px 0 2px; }
+.tg-section input[type="text"], .tg-section input[type="password"] { width: 100%; padding: 5px 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 12px; box-sizing: border-box; }
+.tg-section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.tg-section-header strong { font-size: 13px; }
+
+/* --- Rule rows --- */
+.tg-rule { display: flex; gap: 4px; margin-bottom: 4px; align-items: center; }
+.tg-rule select, .tg-rule input { padding: 3px 6px; border: 1px solid #ddd; border-radius: 4px; font-size: 11px; }
+.tg-rule-value { flex: 1; }
+.tg-rule-delete { border: none; background: none; color: #e53935; cursor: pointer; font-size: 14px; padding: 2px 4px; }
+
+/* --- Telegram actions --- */
+.tg-actions { display: flex; gap: 6px; align-items: center; margin-top: 8px; }
+.tg-actions button { padding: 5px 12px; border: 1px solid #ddd; border-radius: 4px; background: #fff; cursor: pointer; font-size: 12px; }
+#tg-test { border-color: #4CAF50; color: #4CAF50; }
+#tg-save { background: #4CAF50; color: #fff; border-color: #4CAF50; }
+#tg-status { font-size: 11px; color: #666; }
