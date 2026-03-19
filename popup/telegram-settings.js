@@ -9,6 +9,7 @@ const tgElements = {
   addRule: document.getElementById('tg-add-rule'),
   testBtn: document.getElementById('tg-test'),
   saveBtn: document.getElementById('tg-save'),
+  replyEnabled: document.getElementById('tg-reply-enabled'),
   status: document.getElementById('tg-status'),
 };
 
@@ -22,6 +23,7 @@ async function loadTelegramConfig() {
   currentRules = result.telegram_rules || [];
 
   tgElements.enabled.checked = !!config.enabled;
+  tgElements.replyEnabled.checked = !!config.replyEnabled;
   tgElements.botToken.value = config.botToken || '';
   tgElements.chatId.value = config.chatId || '';
   tgElements.topicId.value = config.topicId || '';
@@ -32,6 +34,7 @@ async function loadTelegramConfig() {
 async function saveTelegramConfig() {
   const config = {
     enabled: tgElements.enabled.checked,
+    replyEnabled: tgElements.replyEnabled.checked,
     botToken: tgElements.botToken.value.trim(),
     chatId: tgElements.chatId.value.trim(),
     topicId: tgElements.topicId.value.trim() || null,
@@ -171,6 +174,7 @@ tgElements.saveBtn.addEventListener('click', saveTelegramConfig);
 tgElements.testBtn.addEventListener('click', testConnection);
 tgElements.addRule.addEventListener('click', () => { addRule(); scheduleAutoSave(); });
 tgElements.enabled.addEventListener('change', scheduleAutoSave);
+tgElements.replyEnabled.addEventListener('change', scheduleAutoSave);
 tgElements.botToken.addEventListener('input', scheduleAutoSave);
 tgElements.chatId.addEventListener('input', scheduleAutoSave);
 tgElements.topicId.addEventListener('input', scheduleAutoSave);

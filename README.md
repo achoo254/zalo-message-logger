@@ -28,6 +28,28 @@ Extension trình duyệt (Chrome/Edge) giúp ghi lại tin nhắn Zalo Web và g
 
 ![Cài đặt Telegram](https://github.com/achoo254/zalo-message-logger/raw/main/docs/telegram.png)
 
+## Reply từ Telegram → Zalo
+
+Trả lời tin nhắn Zalo trực tiếp từ Telegram — không cần mở Zalo.
+
+### Bật tính năng
+
+Tab **Telegram** → tick **Enable reply (Telegram → Zalo)**
+
+### Cách dùng
+
+1. Mỗi tin nhắn chuyển tiếp có nút **↩️ [Tên người gửi]**
+2. Nhấn nút → bot hiện khung reply với thông tin người gửi + cuộc trò chuyện
+3. Gõ nội dung → **Enter**
+4. Extension tự động mở đúng cuộc trò chuyện trên Zalo Web và gửi tin nhắn
+5. Bot cập nhật trạng thái: ✅ **Sent** hoặc ❌ **Failed**
+
+### Lưu ý
+
+- Cần mở tab [chat.zalo.me](https://chat.zalo.me) để extension gửi được tin nhắn
+- Cuộc trò chuyện phải hiển thị trong sidebar (đã chat gần đây)
+- Hỗ trợ cả chat 1-1 và nhóm
+
 ## Yêu cầu
 
 - Chrome hoặc Edge (Manifest v3)

@@ -3,7 +3,8 @@
   "name": "Zalo Message Logger",
   "version": "0.1.0",
   "description": "Log Zalo messages to JSON",
-  "permissions": ["storage"],
+  "permissions": ["storage", "alarms"],
+  "host_permissions": ["https://chat.zalo.me/*"],
   "background": {
     "service_worker": "service-worker.js"
   },

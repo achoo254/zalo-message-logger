@@ -43,12 +43,17 @@ function matchRules(msg, rules) {
 // Send message to Telegram via Bot API
 async function sendTelegramMessage(config, msg) {
   const time = msg.timestamp ? new Date(msg.timestamp).toLocaleString('vi-VN') : (msg.timeDisplay || '');
-  const text = `<b>${escapeHtmlTelegram(msg.sender || '?')}</b> (${escapeHtmlTelegram(msg.conversationId || '?')})\n🕐 ${escapeHtmlTelegram(time)}\n${escapeHtmlTelegram(msg.content || '')}`;
+  const text = `<b>${escapeHtmlTelegram(msg.sender || '?')}</b>\n📍 ${escapeHtmlTelegram(msg.conversationId || '?')}\n🕐 ${escapeHtmlTelegram(time)}\n${escapeHtmlTelegram(msg.content || '')}`;
 
   const body = {
     chat_id: config.chatId,
     text,
     parse_mode: 'HTML',
+    reply_markup: {
+      inline_keyboard: [[
+        { text: `↩️ ${msg.sender || '?'}`, callback_data: 'reply' },
+      ]],
+    },
   };
   if (config.topicId) body.message_thread_id = Number(config.topicId);
 
@@ -63,6 +68,31 @@ async function sendTelegramMessage(config, msg) {
   } catch (err) {
     return { ok: false, error: err.message };
   }
+}
+
+// Parse conversation name from a Telegram reply_to_message text
+// Looks for line starting with 📍 marker
+function parseConversationIdFromReply(text) {
+  if (!text) return null;
+  const lines = text.split('\n');
+  for (const line of lines) {
+    if (line.startsWith('📍 ')) {
+      return line.slice(2).trim();
+    }
+  }
+  return null;
+}
+
+// Parse sender name from Telegram message text (first line, bold tag)
+function parseSenderFromReply(text) {
+  if (!text) return null;
+  // First line format: <b>SenderName</b> or just SenderName (plain text after HTML strip)
+  const firstLine = text.split('\n')[0];
+  // Plain text (entities stripped by Telegram in reply_to_message.text)
+  if (firstLine && !firstLine.startsWith('📍') && !firstLine.startsWith('🕐')) {
+    return firstLine.trim();
+  }
+  return null;
 }
 
 // Main entry: check rules and send notification if matched

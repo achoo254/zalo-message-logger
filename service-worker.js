@@ -1,4 +1,5 @@
 importScripts('telegram-notifier.js');
+importScripts('telegram-reply-poller.js');
 
 // Service worker: receive DOM-scraped messages, store in chrome.storage.local
 
@@ -85,5 +86,37 @@ chrome.runtime.onConnect.addListener((port) => {
   if (port.name === 'popup') {
     unreadCount = 0;
     chrome.action.setBadgeText({ text: '' });
+  }
+});
+
+// --- Telegram Reply Polling ---
+
+// Alarm acts as keepalive — restarts poll loop if service worker was killed
+chrome.alarms.onAlarm.addListener((alarm) => {
+  if (alarm.name === REPLY_POLL_ALARM && !isPolling) {
+    chrome.storage.local.get('telegram_config', ({ telegram_config }) => {
+      if (telegram_config?.enabled && telegram_config?.replyEnabled) {
+        isPolling = true;
+        pollLoop();
+      }
+    });
+  }
+});
+
+// Start polling on service worker load if enabled
+chrome.storage.local.get('telegram_config', ({ telegram_config }) => {
+  if (telegram_config?.enabled && telegram_config?.replyEnabled) {
+    startReplyPolling();
+  }
+});
+
+// Toggle polling when config changes
+chrome.storage.onChanged.addListener((changes) => {
+  if (!changes.telegram_config) return;
+  const config = changes.telegram_config.newValue;
+  if (config?.enabled && config?.replyEnabled) {
+    startReplyPolling();
+  } else {
+    stopReplyPolling();
   }
 });
