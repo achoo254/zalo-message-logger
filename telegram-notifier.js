@@ -20,7 +20,9 @@ function matchRules(msg, rules) {
 
     switch (rule.type) {
       case 'user':
-        matched = (msg.sender || '').toLowerCase().includes(val);
+        // Match sender name OR conversationId (outgoing has sender="me")
+        matched = (msg.sender || '').toLowerCase().includes(val)
+          || (msg.conversationId || '').toLowerCase().includes(val);
         break;
       case 'keyword':
         matched = (msg.content || '').toLowerCase().includes(val);
@@ -29,7 +31,7 @@ function matchRules(msg, rules) {
         matched = (msg.conversationId || '').toLowerCase().includes(val);
         break;
       case 'content_type':
-        matched = msg.contentType === rule.value;
+        matched = (msg.contentType || '').toLowerCase() === val;
         break;
     }
 
@@ -40,7 +42,8 @@ function matchRules(msg, rules) {
 
 // Send message to Telegram via Bot API
 async function sendTelegramMessage(config, msg) {
-  const text = `<b>${escapeHtmlTelegram(msg.sender || '?')}</b> (${escapeHtmlTelegram(msg.conversationId || '?')})\n${escapeHtmlTelegram(msg.content || '')}`;
+  const time = msg.timestamp ? new Date(msg.timestamp).toLocaleString('vi-VN') : (msg.timeDisplay || '');
+  const text = `<b>${escapeHtmlTelegram(msg.sender || '?')}</b> (${escapeHtmlTelegram(msg.conversationId || '?')})\n🕐 ${escapeHtmlTelegram(time)}\n${escapeHtmlTelegram(msg.content || '')}`;
 
   const body = {
     chat_id: config.chatId,

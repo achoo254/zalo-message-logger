@@ -156,16 +156,33 @@ function showStatus(text, isError) {
   }
 }
 
+// --- Auto-save (debounced) ---
+// Chrome popup destroys on close, so auto-save to prevent data loss
+
+let autoSaveTimer = null;
+function scheduleAutoSave() {
+  clearTimeout(autoSaveTimer);
+  autoSaveTimer = setTimeout(() => saveTelegramConfig(), 500);
+}
+
 // --- Events ---
 
 tgElements.saveBtn.addEventListener('click', saveTelegramConfig);
 tgElements.testBtn.addEventListener('click', testConnection);
-tgElements.addRule.addEventListener('click', addRule);
+tgElements.addRule.addEventListener('click', () => { addRule(); scheduleAutoSave(); });
+tgElements.enabled.addEventListener('change', scheduleAutoSave);
+tgElements.botToken.addEventListener('input', scheduleAutoSave);
+tgElements.chatId.addEventListener('input', scheduleAutoSave);
+tgElements.topicId.addEventListener('input', scheduleAutoSave);
 tgElements.rulesList.addEventListener('click', (e) => {
   if (e.target.classList.contains('tg-rule-delete')) {
     deleteRule(Number(e.target.dataset.index));
+    scheduleAutoSave();
   }
 });
+// Auto-save when rule fields change (delegated)
+tgElements.rulesList.addEventListener('input', scheduleAutoSave);
+tgElements.rulesList.addEventListener('change', scheduleAutoSave);
 
 // --- Init ---
 loadTelegramConfig();
